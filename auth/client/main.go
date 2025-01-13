@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/go-micro/plugins/v4/registry/consul"
+	"go-micro.dev/v4/registry"
 	"log"
 
 	"go-micro.dev/v4"
@@ -17,7 +19,16 @@ type HelloResponse struct {
 }
 
 func main() {
-	service := micro.NewService(micro.Name("hello.client"))
+
+	// see podman/README.md to see how to start the consul server.
+	reg := consul.NewRegistry(
+		registry.Addrs("127.0.0.1:8500"),
+	)
+
+	service := micro.NewService(
+		micro.Registry(reg),
+		micro.Name("hello.client"),
+	)
 	service.Init()
 
 	// Create a context with metadata

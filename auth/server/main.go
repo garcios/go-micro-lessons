@@ -3,8 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-
+	"github.com/go-micro/plugins/v4/registry/consul"
 	"go-micro.dev/v4"
+	"go-micro.dev/v4/registry"
 )
 
 type Greeter struct{}
@@ -22,7 +23,14 @@ func (g *Greeter) Hello(ctx context.Context, req *HelloRequest, rsp *HelloRespon
 }
 
 func main() {
+
+	// see podman/README.md to see how to start the consul server.
+	reg := consul.NewRegistry(
+		registry.Addrs("127.0.0.1:8500"),
+	)
+
 	service := micro.NewService(
+		micro.Registry(reg),
 		micro.Name("hello"),
 		micro.WrapHandler(AuthMiddleware()),
 	)
