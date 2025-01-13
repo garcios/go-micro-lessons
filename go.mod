@@ -3,6 +3,7 @@ module github.com/oskiegarcia/go-micro-lessons
 go 1.22.2
 
 require (
+	github.com/asim/emque v0.6.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-micro/plugins/v4/broker/kafka v1.2.0
 	github.com/go-micro/plugins/v4/broker/mqtt v1.2.0

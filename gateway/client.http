@@ -15,10 +15,36 @@ GET http://localhost:8080/stock/nodes
 
 
 
-### Access grpc services through http
+### Access stock grpc services through http
 POST http://localhost:8080/stock/Stock.Quote
 Content-Type: application/json
 
 {
   "symbol": "GOOGL"
+}
+
+
+### Create Note
+POST http://localhost:8080/notes/Notes.Create
+Content-Type: application/json
+
+{
+  "title": "New Note 2",
+  "text": "This is my note 2"
+}
+
+### List Notes
+POST http://localhost:8080/notes/Notes.List
+Content-Type: application/json
+
+{
+
+}
+
+### Read a Note
+POST http://localhost:8080/notes/Notes.Read
+Content-Type: application/json
+
+{
+  "id": "f4d9843e-d179-11ef-ba6a-4ebfde4e0a71"
 }
