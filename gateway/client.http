@@ -1,0 +1,12 @@
+
+### Access grpc services through http
+POST http://localhost:8080/helloworld.srv/Helloworld.Call
+Content-Type: application/json
+
+{ "name":"Oscar" }
+
+
+###  View service nodes
+GET http://localhost:8080/helloworld.srv/nodes
+
+
