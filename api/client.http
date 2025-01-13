@@ -16,7 +16,15 @@ GET http://localhost:8080/stock/nodes
 
 
 ### Access grpc services through http
-POST http://localhost:8080/stock/Stock.Quote
+POST http://localhost:8080/stock/Stock/Quote
+Content-Type: application/x-www-form-urlencoded
+
+{
+  "symbol": "MSFT"
+}
+
+### Access grpc services through http
+POST http://localhost:8080/https://www.twilio.com/en-us/blog/a-practical-guide-to-creating-microservices-with-go-micro
 Content-Type: application/json
 
 {

@@ -1,5 +1,5 @@
 # Gateway
-This example demonstrates how to implement an API gateway forward http request into grpc services.
+This example demonstrates how to implement an API gateway to forward http request into grpc services.
 
 # Run
 ```

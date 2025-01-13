@@ -29,10 +29,13 @@ func main() {
 	router.Use(gin.Logger())
 	router.POST("/:service/:endpoint", func(ctx *gin.Context) {
 		service, endpoint := ctx.Param("service"), ctx.Param("endpoint")
+
+		logger.Infof("service: %s, endpoint: %s\n", service, endpoint)
+
 		defer ctx.Request.Body.Close()
 		data, err := io.ReadAll(ctx.Request.Body)
 		if err != nil {
-			logger.Error(err)
+			logger.Error("Error reading request body:", err)
 			ctx.AbortWithStatusJSON(500, err.Error())
 			return
 		}
@@ -41,15 +44,19 @@ func main() {
 			d := json.NewDecoder(strings.NewReader(string(data)))
 			d.UseNumber()
 			if err := d.Decode(&request); err != nil {
-				logger.Error(err)
+				logger.Error("Error decoding request:", err)
 				ctx.AbortWithStatusJSON(500, err.Error())
 				return
 			}
 		}
 		c := srv.Client()
 		var response json.RawMessage
-		if err := c.Call(ctx, c.NewRequest(service, endpoint, request, client.WithContentType("application/json")), &response); err != nil {
-			logger.Error(err)
+		if err := c.Call(ctx, c.NewRequest(service,
+			endpoint,
+			request,
+			client.WithContentType("application/json"),
+		), &response); err != nil {
+			logger.Error("Error calling service:", err)
 			ctx.AbortWithStatusJSON(500, err.Error())
 			return
 		}

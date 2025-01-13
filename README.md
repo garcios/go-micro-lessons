@@ -26,6 +26,12 @@ Micro CLI
 go install github.com/asim/go-micro/cmd/micro@latest
 ```
 
+Open API
+```shell
+go get github.com/google/gnostic
+go install github.com/google/gnostic/cmd/protoc-gen-openapi
+```
+
 Dashboard
 ```shell
 go install github.com/go-micro/dashboard@latest
@@ -65,3 +71,4 @@ require (
 - https://micro.dev/getting-started
 - https://github.com/micro/services
 - https://github.com/xpunch/go-micro-example/blob/main/v4/README.md
+- https://www.twilio.com/en-us/blog/a-practical-guide-to-creating-microservices-with-go-micro
