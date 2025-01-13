@@ -2,16 +2,16 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"github.com/go-micro/plugins/v4/server/http"
+	"go-micro.dev/v4/client"
 	"io"
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-micro/plugins/v4/client/grpc"
 	_ "github.com/go-micro/plugins/v4/client/grpc"
 	_ "github.com/go-micro/plugins/v4/registry/etcd"
-	"github.com/go-micro/plugins/v4/server/http"
 	"go-micro.dev/v4"
-	"go-micro.dev/v4/client"
 	"go-micro.dev/v4/logger"
 	"go-micro.dev/v4/registry"
 )
@@ -19,7 +19,7 @@ import (
 func main() {
 	srv := micro.NewService(
 		micro.Server(http.NewServer()),
-		micro.Client(grpc.NewClient()),
+		//micro.Client(grpc.NewClient()),
 		micro.Name("gateway"),
 		micro.Address(":8080"),
 	)
@@ -39,23 +39,31 @@ func main() {
 			ctx.AbortWithStatusJSON(500, err.Error())
 			return
 		}
-		var request json.RawMessage
+
+		var payload json.RawMessage
 		if len(data) > 0 {
 			d := json.NewDecoder(strings.NewReader(string(data)))
 			d.UseNumber()
-			if err := d.Decode(&request); err != nil {
+			if err := d.Decode(&payload); err != nil {
 				logger.Error("Error decoding request:", err)
 				ctx.AbortWithStatusJSON(500, err.Error())
 				return
 			}
 		}
+
+		fmt.Println("payload:", string(payload))
+
 		c := srv.Client()
-		var response json.RawMessage
-		if err := c.Call(ctx, c.NewRequest(service,
+
+		request := c.NewRequest(
+			service,
 			endpoint,
-			request,
+			payload,
 			client.WithContentType("application/json"),
-		), &response); err != nil {
+		)
+
+		var response json.RawMessage
+		if err := c.Call(ctx, request, &response); err != nil {
 			logger.Error("Error calling service:", err)
 			ctx.AbortWithStatusJSON(500, err.Error())
 			return

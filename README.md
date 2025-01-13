@@ -55,6 +55,7 @@ require (
     github.com/go-micro/plugins/v4/wrapper/trace/opentracing v1.2.0
     github.com/google/uuid v1.6.0
     github.com/opentracing/opentracing-go v1.2.0
+    github.com/patrickmn/go-cache v2.1.0+incompatible
     github.com/uber/jaeger-client-go v2.30.0+incompatible
     github.com/xpunch/go-micro-example/v4 v4.0.0-20230924144533-5ab2063c35a3
     go-micro.dev/v4 v4.11.0

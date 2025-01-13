@@ -20,5 +20,5 @@ POST http://localhost:8080/stock/Stock.Quote
 Content-Type: application/json
 
 {
-  "symbol": "MSFT"
+  "symbol": "GOOGL"
 }
